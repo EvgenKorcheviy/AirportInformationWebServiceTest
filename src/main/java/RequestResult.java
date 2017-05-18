@@ -15,25 +15,36 @@ import java.util.List;
  */
 
 @XmlRootElement(name = "NewDataSet")
-public class CountryAirPorts {
-    @JacksonXmlElementWrapper(localName = "Table")
+public class RequestResult {
+
     private List<Airport> airports;
-    public CountryAirPorts() {
+
+    public RequestResult() {
     }
-    public CountryAirPorts(List<Airport> airports) {
+    public RequestResult(List<Airport> airports) {
         this.airports = airports;
     }
+
     public List<Airport> getAirports() {
         return airports;
     }
+
     @XmlElement(name = "Table")
     public void setAirports(List<Airport> airports) {
         this.airports = airports;
     }
+
     @Override
     public String toString() {
-        return "CountryAirPorts{" +
+        return "RequestResult{" +
                 "airports=" + airports +
                 '}';
+    }
+
+    public boolean isAirportsFromSameCountry(String country) {
+        for (Airport airport : airports) {
+            if (!airport.getCountry().equals(country)) return false;
+        }
+        return true;
     }
 }
