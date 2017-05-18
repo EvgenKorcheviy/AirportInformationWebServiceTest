@@ -1,4 +1,4 @@
-package java.util;
+package util;
 
 import javax.xml.soap.*;
 import javax.xml.transform.stream.StreamSource;
@@ -10,7 +10,7 @@ import java.io.*;
 public class RequestCreator {
 
     private static final String baseURL = "http://www.webserviceX.NET/";
-    private static final String filePath = "src/test/resources/requestResult.xml";
+    private static final String filePath = "src/test/resources/request.xml";
 
     private static SOAPMessage createRequest(String requestName) throws SOAPException, FileNotFoundException {
         MessageFactory messageFactory = MessageFactory.newInstance();
@@ -40,6 +40,7 @@ public class RequestCreator {
                 "    </soap:Body>\n" +
                 "</soap:Envelope>");
         bufferedWriter.write(builder.toString());
+        bufferedWriter.close();
         return createRequest("GetAirportInformationByCountry");
     }
 
@@ -57,6 +58,7 @@ public class RequestCreator {
                 "  </soap:Body>\n" +
                 "</soap:Envelope>");
         bufferedWriter.write(builder.toString());
+        bufferedWriter.close();
         return createRequest("getAirportInformationByAirportCode");
     }
 
@@ -74,6 +76,7 @@ public class RequestCreator {
                 "  </soap:Body>\n" +
                 "</soap:Envelope>");
         bufferedWriter.write(builder.toString());
+        bufferedWriter.close();
         return createRequest("getAirportInformationByCityOrAirportName");
     }
 
@@ -91,6 +94,7 @@ public class RequestCreator {
                 "  </soap:Body>\n" +
                 "</soap:Envelope>");
         bufferedWriter.write(builder.toString());
+        bufferedWriter.close();
         return createRequest("getAirportInformationByISOCountryCode");
     }
 }
