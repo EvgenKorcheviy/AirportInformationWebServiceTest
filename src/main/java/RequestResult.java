@@ -1,12 +1,12 @@
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElements;
 import javax.xml.bind.annotation.XmlList;
 import javax.xml.bind.annotation.XmlRootElement;
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -47,4 +47,50 @@ public class RequestResult {
         }
         return true;
     }
+
+    public boolean isAirportWithCorrectCode(String code) {
+        boolean status = true;
+        int count = 0;
+        for (Airport airport : airports) {
+            if (airport.getAirportCode().equals(code)) {
+                count ++;
+            }
+            if (!airport.getAirportCode().equals(code)) return false;
+            if (count > 1) return false;
+        }
+        return true;
+    }
+
+    public boolean isAirportWithCorrectNameAndCity(String nameAndCity) {
+        boolean status = true;
+        int count = 0;
+        for (Airport airport : airports) {
+            if (airport.getCityOrAirportName().equals(nameAndCity)) {
+                count ++;
+            }
+            if (!airport.getCityOrAirportName().equals(nameAndCity)) return false;
+            if (count > 1) return false;
+        }
+        return true;
+    }
+
+    public boolean isAirportsWithTheSameCountryCode(String countryCode) {
+        for (Airport airport : airports) {
+            if (!airport.getCountryAbbrviation().equalsIgnoreCase(countryCode)) return false;
+        }
+        return true;
+    }
+
+    public static String requestResultText() throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/requestResult.xml")));
+        String line;
+        StringBuilder sb = new StringBuilder();
+        while((line=br.readLine())!= null){
+            sb.append(line.trim());
+        }
+        String xml = sb.toString();
+
+        return xml;
+    }
+
 }

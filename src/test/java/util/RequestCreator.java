@@ -53,7 +53,7 @@ public class RequestCreator {
                 "    <getAirportInformationByAirportCode xmlns=\"http://www.webserviceX.NET\">\n" +
                 "      <airportCode>");
         builder.append(code);
-        builder.append("/airportCode>\n" +
+        builder.append("</airportCode>\n" +
                 "    </getAirportInformationByAirportCode>\n" +
                 "  </soap:Body>\n" +
                 "</soap:Envelope>");
@@ -91,6 +91,21 @@ public class RequestCreator {
         builder.append(ISO);
         builder.append("</CountryAbbrviation>\n" +
                 "    </getAirportInformationByISOCountryCode>\n" +
+                "  </soap:Body>\n" +
+                "</soap:Envelope>");
+        bufferedWriter.write(builder.toString());
+        bufferedWriter.close();
+        return createRequest("getAirportInformationByISOCountryCode");
+    }
+
+    public static SOAPMessage createWrongMessage() throws IOException, SOAPException {
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(filePath));
+        StringBuilder builder = new StringBuilder();
+        builder.append("<?xml version=\"1.0\" encoding=\"utf-8\"?>\n" +
+                "<soap:Envelope xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xmlns:xsd=\"http://www.w3.org/2001/XMLSchema\" xmlns:soap=\"http://schemas.xmlsoap.org/soap/envelope/\">\n" +
+                "  <soap:Body>\n" +
+                "    <getAirportInformationByISOCountryCode xmlns=\"http://www.webserviceX.NET\">\n");
+        builder.append("    </getAirportInformationByISOCountryCode>\n" +
                 "  </soap:Body>\n" +
                 "</soap:Envelope>");
         bufferedWriter.write(builder.toString());

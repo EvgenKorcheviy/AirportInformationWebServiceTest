@@ -1,5 +1,6 @@
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
+import javax.xml.bind.UnmarshalException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
@@ -12,6 +13,7 @@ import java.util.regex.Pattern;
  */
 public class AirportFactory {
     public static RequestResult createResult() throws IOException, JAXBException {
+        try {
         BufferedReader br = new BufferedReader(new FileReader(new File("src/test/resources/requestResult.xml")));
         String line;
         StringBuilder sb = new StringBuilder();
@@ -30,6 +32,9 @@ public class AirportFactory {
 
         Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
         RequestResult airports = (RequestResult) jaxbUnmarshaller.unmarshal( new StreamSource( new StringReader(xml)));
-        return airports;
+        return airports;}
+        catch (UnmarshalException e) {
+            return new RequestResult();
+        }
     }
 }
